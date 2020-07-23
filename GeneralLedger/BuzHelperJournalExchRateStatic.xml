@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>BuzHelperJournalExchRateStatic</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+class BuzHelperJournalExchRateStatic
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>getExchRate</Name>
+				<Source><![CDATA[
+    public static ExchRate getExchRate(CurrencyCode _currencyCode, 
+		TransDate _transDate = systemDateGet(), 
+		ExchangeRateTypeId _exchangeRateTypeId = Ledger::find(Ledger::current()).DefaultExchangeRateType)
+    {
+        ExchangeRate     exchangeRate;
+        ExchangeRateType ExchangeRateType;
+        ExchangeRateCurrencyPair exchangeRateCurrencyPair;
+        real             exchRate;
+
+        CurrencyCode fromCurrency  = _currencyCode;
+        CurrencyCode toCurrency    = Ledger::find(Ledger::current()).AccountingCurrency ;
+
+
+        select firstonly RecId from exchangeRateCurrencyPair
+                where exchangeRateCurrencyPair.ExchangeRateType == _exchangeRateTypeId
+                &&  exchangeRateCurrencyPair.FromCurrencyCode == fromCurrency
+                &&  exchangeRateCurrencyPair.ToCurrencyCode   == toCurrency;
+
+        if( exchangeRateCurrencyPair.RecId )
+        {
+            exchRate = exchangeRate::findByDate(exchangeRateCurrencyPair.RecId, _transDate).ExchangeRate;
+            return exchRate/100;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

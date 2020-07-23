@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>BuzHelperGlobal</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+class BuzHelperGlobal
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>mthNameTR</Name>
+				<Source><![CDATA[
+	public static Name mthNameTR(int _month)
+    {
+        switch (_month)
+        {
+            case 1:
+                return "Ocak";
+            case 2:
+                return "Şubat";
+            case 3:
+                return "Mart";
+            case 4:
+                return "Nisan";
+            case 5:
+                return "Mayıs";
+            case 6:
+                return "Haziran";
+            case 7:
+                return "Temmuz";
+            case 8:
+                return "Ağustos";
+            case 9:
+                return "Eylül";
+            case 10:
+                return "Ekim";
+            case 11:
+                return "Kasım";
+            default:
+                return "Aralık";
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>refreshCallerDatasource</Name>
+				<Source><![CDATA[
+    public static void refreshCallerDatasource(Args _args, boolean _useReadRefreshResearchOption = false)
+    {
+        FormRun formRun = _args.caller();
+ 
+        if(formRun)
+        {
+            // This is the default option
+            if( _useReadRefreshResearchOption == false )
+            {
+                #Task
+                formRun.task(#taskRefresh);
+            }
+            // Sometimes default option don't work properly in this case you can try the option below
+			else
+            {
+                formRun.dataSource().refresh();
+                formRun.dataSource().reread();
+                formRun.dataSource().research();
+            }
+        }
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>getDateFromDialog</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Kullanıcıdan açıklama almak için kullanılı
+    /// </summary>
+    /// <param name="_throwErrorIfEmpty">
+    /// Kullanıcı açıklama girmezse işlemin iptal edilip edilmeyeceğine karar verir
+    /// true ise işlem iptal edilir
+    /// false ise işlem iptal edilmez
+    /// </param>
+    /// <returns>
+    /// Kullanıcının girmiş olduğu açıklama döndürülür
+    /// </returns>
+    /// <remarks>
+    ///
+    /// </remarks>
+    /// <exception cref="Exception::Error">
+    /// Açıklama zorunludur şeklinde bir hata mesajı verilir
+    /// </exception>        
+    static TransDate getDateFromDialog(boolean _throwErrorIfEmpty = false,
+            Description     _caption = "",
+            Description255  _helpText1 = "",
+            Description255  _helpText2 = "",
+            Description255  _helpText3 = "",
+            TransDate       _defaultTransDate = dateNull())
+    {
+        Dialog dialog;
+        DialogField dfTransDate;
+        ;
+        
+        dialog = new dialog(_caption);
+        if( _helpText1 )
+			dialog.addText(_helpText1);
+        if( _helpText2 )
+            dialog.addText(_helpText2);
+        if( _helpText3 )
+            dialog.addText(_helpText3);
+        
+        dfTransDate = dialog.addFieldValue(extendedTypeStr(TransDate), _defaultTransDate);
+        if( !dialog.run() )
+            return dateNull();
+        
+        if( _throwErrorIfEmpty && !dfTransDate.value() )
+            throw error("Tarih boş bırakılamaz");
+        
+        return dfTransDate.value();
+        
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>userId2HCMWorker</Name>
+				<Source><![CDATA[
+    public static HcmWorker userId2HCMWorker(UserId _userId)
+    {
+        DirPersonUser   personUser;
+        HcmWorker       worker;
+
+        select firstonly worker
+            exists join personUser
+				where worker.Person == personUser.PersonParty
+				&& personUser.User == _userId;
+
+        return worker;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>userId2PersonnelNumber</Name>
+				<Source><![CDATA[
+    public static HcmPersonnelNumberId userId2PersonnelNumber(UserId _userId)
+    {
+        return BuzHelperGlobal::userId2HCMWorker(_userId).PersonnelNumber;
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>copyTableFromCommon</Name>
+				<Source><![CDATA[
+    /// <summary>
+    /// Copy same field name value from source common to destination common
+    /// </summary>
+    /// <param name = "_fromCommon">Source table record</param>
+    /// <param name = "_toCommon">Destination table record</param>
+    /// <returns>Return the filled record</returns>
+    public static common copyTableFromCommon( Common _fromCommon, Common _toCommon )
+    {
+        SysDictTable    dictTable = new SysDictTable(_toCommon.TableId);
+        int             i;
+        int             fieldCnt;
+        fieldId         fieldId, fieldIdTmp;
+        FieldName       fieldName;
+        ;
+        
+        fieldCnt = dictTable.fieldCntWithoutSys();
+        for ( i = 1 ; i <= fieldCnt ; i++ )
+        {
+            fieldId     = dictTable.fieldCnt2Id(i);
+            fieldName   = fieldid2name(_toCommon.TableId, fieldId);
+            fieldIdTmp  = fieldName2id(_fromCommon.TableId, fieldName);
+        
+            if( fieldIdTmp && fieldId )
+            {
+                _toCommon.(fieldId) = _fromCommon.(fieldIdTmp);
+            }
+        }
+        
+        return _toCommon;
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

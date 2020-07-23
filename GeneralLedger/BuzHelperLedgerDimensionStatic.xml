@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>BuzHelperLedgerDimensionStatic</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+public static class BuzHelperLedgerDimensionStatic
+{
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>getDynamicAccountFromAccountNumber</Name>
+				<Source><![CDATA[
+    public static LedgerDimensionAccount getDynamicAccountFromAccountNumber(LedgerJournalAC _accountNumber, LedgerJournalACType _accountType)
+    {
+        return LedgerDynamicAccountHelper::getDynamicAccountFromAccountNumber(_accountNumber, _accountType);
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>getDefaultAccountFromMainAccountRecId</Name>
+				<Source><![CDATA[
+    public static LedgerDimensionAccount getDefaultAccountFromMainAccountRecId(MainAccountRecId _mainAccountRecId)
+    {
+        return LedgerDefaultAccountHelper::getDefaultAccountFromMainAccountRecId(_mainAccountRecId);
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>serviceCreateLedgerDimension</Name>
+				<Source><![CDATA[
+	public static LedgerDimensionAccount serviceCreateLedgerDimension(RecId _ledgerDimensionId,
+        DimensionDefault _dimensionDefault1 = 0,
+        DimensionDefault _dimensionDefault2 = 0,
+        DimensionDefault _dimensionDefault3 = 0)
+    {
+        return LedgerDimensionFacade::serviceCreateLedgerDimension(_ledgerDimensionId, _dimensionDefault1, _dimensionDefault2, _dimensionDefault3);
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxClass xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+	<Name>BuzHelperLedgerJournalStatic</Name>
+	<SourceCode>
+		<Declaration><![CDATA[
+/// <summary>
+/// The <c>BuzHelperLedgerJournalStatic</c> class contains frequently used static codes
+/// </summary>
+class BuzHelperLedgerJournalStatic
+{
+    
+}
+]]></Declaration>
+		<Methods>
+			<Method>
+				<Name>createJournalTable</Name>
+				<Source><![CDATA[
+	public static LedgerJournalTable createJournalTable(LedgerJournalNameId _journalNameId,
+        Name _journalDescription = "",
+        DimensionDefault _defaultDimension = 0,
+		boolean _initOtherFieldsFromLedgerJournalName = false )
+    {
+        BuzHelperLedgerJournalTable helperLedgerJournalTable = BuzHelperLedgerJournalTable::construct();
+
+        helperLedgerJournalTable.parmLedgerJournalNameId(_journalNameId);
+        helperLedgerJournalTable.parmJournalDescription(_journalDescription);
+        helperLedgerJournalTable.parmDefaultDimension(_defaultDimension);
+        helperLedgerJournalTable.parmInitOtherFieldsFromLedgerJournalName(_initOtherFieldsFromLedgerJournalName);
+
+        helperLedgerJournalTable.createJournalTable();
+
+        return helperLedgerJournalTable.parmLedgerJournalTable();
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>createJournalTrans</Name>
+				<Source><![CDATA[
+    public static LedgerJournalEngine createJournalTrans(ledgerJournalTable _ledgerJournalTable,
+		LedgerJournalEngine _ledgerJournalEngine,
+        DimensionDynamicAccount _ledgerDimension,
+        LedgerJournalACType _accountType,
+        LedgerDimensionValueSet _defaultDimension,
+        AmountMST _amount,
+		ExchRate _exchRate,
+        currencyCode _currencyCode,
+        TransDate _transDate,
+        Voucher _voucher,
+        LedgerJournalTransTxt _ledgerJournalTransTxt = "",
+        DimensionDynamicAccount _offsetLedgerDimension = 0,
+        LedgerJournalACType _offsetAccountType = LedgerJournalACType::Ledger,
+        LedgerDimensionValueSet _offsetDefaultDimension = 0,
+		boolean _generateNewVoucher = false,
+		boolean _skipValidations = false)
+    {
+        BuzHelperLedgerJournalTrans helperLedgerJournalTrans = BuzHelperLedgerJournalTrans::construct();
+
+        helperLedgerJournalTrans.parmLedgerJournalTable(_ledgerJournalTable);
+        helperLedgerJournalTrans.parmLedgerJournalEngine(_ledgerJournalEngine);
+        helperLedgerJournalTrans.parmLedgerDimension(_ledgerDimension);
+        helperLedgerJournalTrans.parmAccountType(_accountType);
+        helperLedgerJournalTrans.parmDefaultDimension(_defaultDimension);
+        helperLedgerJournalTrans.parmAmount(_amount);
+        helperLedgerJournalTrans.parmCurrencyCode(_currencyCode);
+        helperLedgerJournalTrans.parmTransDate(_transDate);
+        helperLedgerJournalTrans.parmVoucher(_voucher);
+        helperLedgerJournalTrans.parmLedgerJournalTransTxt(_ledgerJournalTransTxt);
+        helperLedgerJournalTrans.parmOffsetLedgerDimension(_offsetLedgerDimension);
+        helperLedgerJournalTrans.parmOffsetAccountType(_offsetAccountType);
+        helperLedgerJournalTrans.parmOffsetDefaultDimension(_offsetDefaultDimension);
+        helperLedgerJournalTrans.parmGenerateNewVoucher(_generateNewVoucher);
+        helperLedgerJournalTrans.parmSkipValidations(_skipValidations);
+        helperLedgerJournalTrans.parmExchRate(_exchRate);
+
+        helperLedgerJournalTrans.createJournalTrans();
+        return helperLedgerJournalTrans.parmLedgerJournalEngine();
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>getNewVoucher</Name>
+				<Source><![CDATA[
+	public static Voucher getNewVoucher(LedgerJournalNameId _ledgerJournalNameId)
+    {
+        NumberSeq numberSeq;
+
+        if( !_ledgerJournalNameId )
+            return "";
+
+        numberSeq = NumberSeq::newGetVoucherFromId(LedgerJournalName::find(_ledgerJournalNameId).NumberSequenceTable);
+        return numberSeq.voucher();
+    }
+
+]]></Source>
+			</Method>
+			<Method>
+				<Name>postLedgerJournal</Name>
+				<Source><![CDATA[
+    public static void postLedgerJournal(LedgerJournalTable _ledgerJournalTable, 
+        NoYes _post = NoYes::Yes, NoYes _transferErrors = NoYes::No)
+    {
+        LedgerJournalCheckPost ledgerJournalCheckPost;
+
+        ledgerJournalCheckPost =  LedgerJournalCheckPost::newLedgerJournalTable(_ledgerJournalTable, _post, _transferErrors);
+        ledgerJournalCheckPost.run();
+    }
+
+]]></Source>
+			</Method>
+		</Methods>
+	</SourceCode>
+</AxClass>
