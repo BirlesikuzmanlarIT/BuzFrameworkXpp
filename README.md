@@ -3,8 +3,9 @@
 ### mthNameTR
 Find turkish month name
 ### refreshCallerDatasource
-### Çağıran formun yenilenmesini sağlar. 
-### getDateFromDialog
+Refresh caller datasource. Retain position of record.
+### [getDateFromDialog](https://github.com/BirlesikuzmanlarIT/BuzFrameworkXpp/wiki/getDateFromDialog)
+
 ### userId2HCMWorker
 ### userId2PersonnelNumber
 ### copyTableFromCommon
