@@ -1,5 +1,5 @@
 # BuzFramework Documentation
-## BuzHelperGlobal
+## BuzHelperGlobalStatic Class
 ### mthNameTR
 Find turkish month name
 ### refreshCallerDatasource
@@ -10,7 +10,7 @@ Get date from user with dialog form.
 ### userId2PersonnelNumber
 ### copyTableFromCommon
 
-## BuzHelperDefaultDimensionStatic
+## BuzHelperDefaultDimensionStatic Class
 ### createDefaultDimension
 ### addDimension
 ### getDimensionValue
