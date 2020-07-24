@@ -13,3 +13,17 @@
 ### getDimensionDisplayValueName
 ### dimensionAttributeLookup
 ### addRemoveDimensionValue
+
+## BuzHelperJournalExchRateStatic Class
+### [getExchRate](https://github.com/BirlesikuzmanlarIT/BuzFrameworkXpp/wiki/GetExchRate)
+
+## BuzHelperLedgerDimensionStatic Class
+### getDynamicAccountFromAccountNumber
+### getDefaultAccountFromMainAccountRecId
+### serviceCreateLedgerDimension
+
+## BuzHelperLedgerJournalStatic Class
+### createJournalTable
+### createJournalTrans
+### getNewVoucher
+### postLedgerJournal
