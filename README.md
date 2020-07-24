@@ -1,7 +1,7 @@
-# BuzFramework dökümantasyonu
+# BuzFramework Documentation
 ## BuzHelperGlobal
 ### mthNameTR
-Tam sayı olarak gelen değerin türkçe ay karşılığını verir
+Find turkish month name
 ### refreshCallerDatasource
 ### Çağıran formun yenilenmesini sağlar. 
 ### getDateFromDialog
