@@ -25,8 +25,9 @@
 ### dimensionAttributeLookup
 ### addRemoveDimensionValue
 
-## BuzHelperJournalExchRateStatic Class
+## BuzHelperExchRateStatic Class
 ### [getExchRate](https://github.com/BirlesikuzmanlarIT/BuzFrameworkXpp/wiki/GetExchRate)
+### [curAmount2CurAmount](https://github.com/BirlesikuzmanlarIT/BuzFrameworkXpp/wiki/CurAmount2CurAmount)
 
 ## BuzHelperLedgerDimensionStatic Class
 ### getDynamicAccountFromAccountNumber
